@@ -22,6 +22,8 @@ Comments
 
 ## Table of Contents
 - [Section - 1 Introduction of Open-Source EDA, OpenLane and Sky130 PDK](#Section---1-Introduction-of-Open-Source-EDA-OpenLane-and-Sky130-PDK)
+- [Section - 2 Good Floorplan vs bad Floorplan and Introduction to library cells](#Section---2-Good-Floorplan-vs-bad-Floorplan-and-Introduction-to-library-cells)
+
 
 ## Overview Of QFN-48 Chip (PicoRV32 - A Size-Optimized RISC-V CPU)
 VSD Squadron Board: The VSD Board is shown below. Our focus is on the enclosed region containing the "Microprocessor (PicoRV32A-Cpu)," which will be designed using the RTL to GDS flow, progressing from the abstract design level to the fabrication stage.
