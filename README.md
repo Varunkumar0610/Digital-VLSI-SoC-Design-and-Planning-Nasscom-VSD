@@ -23,6 +23,7 @@ Comments
 ## Table of Contents
 - [Section - 1 Introduction of Open-Source EDA, OpenLane and Sky130 PDK](#Section---1-Introduction-of-Open-Source-EDA-OpenLane-and-Sky130-PDK)
 - [Section - 2 Good Floorplan vs bad Floorplan and Introduction to library cells](#Section---2-Good-Floorplan-vs-bad-Floorplan-and-Introduction-to-library-cells)
+- [Section -3 Design Library Cell using magic layout and ngspice charcterization](#Section---3-Design-Library-Cell-using-magic-layout-and-ngspice-charcterization)
 
 
 ## Overview Of QFN-48 Chip (PicoRV32 - A Size-Optimized RISC-V CPU)
@@ -490,6 +491,8 @@ Rise transition time = time(slew_high_rise_thr) - time (slew_low_rise_thr)
 
 Low transition time = time(slew_high_fall_thr) - time (slew_low_fall_thr)
 ```
+
+# Section -3 Design Library Cell using magic layout and ngspice charcterization
 
 
 
