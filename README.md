@@ -258,4 +258,236 @@ Percentage\ of\ DFF's = 0.108429685 * 100 = 10.84296854\ \%
 
 # Section - 2 Good Floorplan vs bad Floorplan and Introduction to library cells
 
+## Utilization factor and Aspect ratio of a chip or die:
+
+The utilization factor and aspect ratio are critical metrics in chip or die design and fabrication:
+
+**Utilization Factor:**
+- **Definition:**  The utilization factor, often referred to as area utilization, is a measure of how efficiently the available area on a chip or die is used by the actual logic, memory, and other functional components. It is calculated as the ratio of the area occupied by the functional elements to the total available area of the chip.
+Formula:
+Utilization Factor = (Area Occupied by Functional Components/Total Chip Area)×100 %
+
+- Importance: A higher utilization factor indicates that more of the chip's area is used for functional purposes, which is generally desirable for cost efficiency. However, it needs to be balanced with considerations like routing space, power distribution, and thermal management.
+
+**Aspect Ratio:**
+- **Definition:** The aspect ratio of a chip or die refers to the ratio of its width to its height. It is an important parameter in the physical design and packaging of semiconductor devices.
+Formula:
+Aspect Ratio = Height of the Chip/Width of the Chip
+
+ 
+- Importance: The aspect ratio affects the chip's mechanical stability, ease of packaging, and manufacturability. Ideally, the aspect ratio should be close to 1 (i.e., the chip is nearly square), as this minimizes stress and simplifies the packaging process. However, depending on the application and design constraints, the aspect ratio may vary.
+
+
+![Screenshot 2024-08-24 221207](https://github.com/user-attachments/assets/c41d2c60-621c-4e05-a93e-bfe2dc929d52)
+
+**Concept of pre-placed cells and de-coupling capacitors:**
+- **Pre-placed Cells:**
+Pre-placed cells are components or functional units within an IC or on a PCB that are placed at specific locations before the main placement and routing process begins. These cells are typically used for power management, signal integrity, or other critical functions that require precise positioning to meet design constraints. Pre-placed cells can include decoupling capacitors, power pads, voltage regulators, or other components that are essential for the proper functioning of the circuit.
+
+- **Decoupling Capacitors:**
+Decoupling capacitors are small-value capacitors placed between the power supply rails (Vcc and Gnd) of an integrated circuit or on a PCB to provide a local source of energy that can supply transient current demands of the active devices. They help to "decouple" the local power supply from the rest of the circuit, ensuring that rapid changes in current demanded by one component do not affect the supply voltage of other components.
+
+![image](https://github.com/user-attachments/assets/e150ba66-28c5-4678-abab-5ddfd327764a)
+
+**Run Floorplan**
+```bash
+run_floorplan
+```
+![Screenshot from 2024-08-30 21-50-33](https://github.com/user-attachments/assets/7c5ccc63-ce5e-4c6c-8729-c41e0280defb)
+
+![Screenshot from 2024-08-30 21-50-41](https://github.com/user-attachments/assets/33a247a0-b421-4293-ab8f-07d3bc7e0b3d)
+
+**Picorv32a floorplan def file:**
+
+
+![Screenshot from 2024-08-30 22-01-51](https://github.com/user-attachments/assets/00e525ea-022c-497c-99cc-4b920998e174)
+
+![Screenshot from 2024-08-30 21-59-56](https://github.com/user-attachments/assets/961be1a5-bba4-4001-b640-c6759e889625)
+
+According to floorplan def
+```math
+1000\ Unit\ Distance = 1\ Micron
+```
+```math
+Die\ width\ in\ unit\ distance = 660685 - 0 = 660685
+```
+```math
+Die\ height\ in\ unit\ distance = 671405 - 0 = 671405
+```
+```math
+Distance\ in\ microns = \frac{Value\ in\ Unit\ Distance}{1000}
+```
+```math
+Die\ width\ in\ microns = \frac{660685}{1000} = 660.685\ Microns
+```
+```math
+Die\ height\ in\ microns = \frac{671405}{1000} = 671.405\ Microns
+```
+```math
+Area\ of\ die\ in\ microns = 660.685 * 671.405 = 443587.212425\ Square\ Microns
+```
+
+#### Load generated floorplan def in magic tool and explore the floorplan.
+
+Commands to load floorplan def in magic in another terminal
+
+```bash
+# Change directory to path containing generated floorplan def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/floorplan/
+
+# Command to load the floorplan def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+```
+
+Screenshots of floorplan def in magic
+
+![image](https://github.com/user-attachments/assets/eda02393-4a7b-4d77-96f1-f50bda007f74)
+
+Equidistant placement of ports
+
+![image](https://github.com/user-attachments/assets/c5ad6d2d-1d1d-4637-a279-b66c4788823c)
+
+Port layer as set through config.tcl
+
+![image](https://github.com/user-attachments/assets/82c6539a-e8df-4cc9-bfa1-cacb187e037b)
+![image](https://github.com/user-attachments/assets/cc2fec69-cfed-42dd-b604-80aa311e460d)
+
+Decap Cells and Tap Cells
+
+![image](https://github.com/user-attachments/assets/8e557f9f-4fe6-4b90-bade-f976d22f6f9e)
+
+Diogonally equidistant Tap cells
+
+![image](https://github.com/user-attachments/assets/baee36ed-c151-45e6-a19e-fe9abe128b52)
+
+Unplaced standard cells at the origin
+
+![image](https://github.com/user-attachments/assets/ccca9bbf-4d49-4ef6-ab27-a49f3b64ccbb)
+
+#### Run 'picorv32a' design congestion aware placement using OpenLANE flow and generate necessary outputs.
+
+Command to run placement
+
+```tcl
+# Congestion aware placement by default
+run_placement
+```
+
+Screenshots of placement run
+
+![image](https://github.com/user-attachments/assets/d6371139-e405-4f6b-bf50-8a4b290d1e1d)
+![image](https://github.com/user-attachments/assets/2587dd6d-f728-481a-b028-39711526e8fb)
+
+#### Load generated placement def in magic tool and explore the placement.
+
+Commands to load placement def in magic in another terminal
+
+```bash
+# Change directory to path containing generated placement def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/placement/
+
+# Command to load the placement def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+
+Screenshots of floorplan def in magic
+
+![image](https://github.com/user-attachments/assets/d3d93873-21de-4067-8c18-b63098296f61)
+
+Standard cells legally placed 
+
+![image](https://github.com/user-attachments/assets/41aa67c0-7571-4dcf-86a5-5e68ed096464)
+
+Commands to exit from current run
+
+```tcl
+# Exit from OpenLANE flow
+exit
+
+# Exit from OpenLANE flow docker sub-system
+exit
+```
+## Placement in VLSI Design
+Placement plays a crucial role in VLSI (Very Large Scale Integration) design. It involves determining the physical locations of standard cells or logic elements within a chip or block. Let's break it down:
+
+- **Global Placement:**
+
+  - Global placement assigns general locations to movable objects (cells).
+  - Some overlaps between placed objects are allowed during this stage. 
+  - The goal is to achieve a rough layout that satisfies area constraints.
+
+- **Detailed Placement:**
+
+  - Detailed placement refines the object locations obtained from global placement.
+  - It enforces non-overlapping constraints and ensures that cells are placed on legal cell sites.
+  - The quality of detailed placement significantly impacts subsequent routing stages.
+
+``` magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def & ```
+
+![Screenshot from 2024-08-26 18-04-15](https://github.com/user-attachments/assets/ee8746ed-8c5d-429f-a0b1-4f8b11288677)
+![Screenshot from 2024-08-26 18-11-42](https://github.com/user-attachments/assets/e8130182-c3f6-4658-8d2b-ad2b5f3b6385)
+![Screenshot from 2024-08-26 18-12-21](https://github.com/user-attachments/assets/590e4e06-9d00-45be-bbe2-59636d6a5f11)
+![Screenshot from 2024-08-26 18-16-10](https://github.com/user-attachments/assets/8051e35b-b5b8-43b1-9d4d-7a1f1dc5838a)
+
+## CELL DESIGN AND CHARACETRIZATION FLOWS
+
+Library is a place where we get information about every cell. It has differents cells with different size, functionality,threshold voltages. There is a typical cell design flow steps.
+
+    Inputs : PDKS(process design kit) : DRC & LVS, SPICE Models, library & user-defined specs.
+    Design Steps :Circuit design, Layout design (Art of layout Euler's path and stick diagram), Extraction of parasitics, Characterization (timing, noise, power).
+    Outputs: CDL (circuit description language), LEF, GDSII, extracted SPICE netlist (.cir), timing, noise and power .lib files
+## Standard Cell Characterization Flow
+A typical standard cell characterization flow that is followed in the industry includes the following steps:
+
+- Read in the models and tech files
+- Read extracted spice Netlist
+- Recognise behavior of the cells
+- Read the subcircuits
+- Attach power sources
+- Apply stimulus to characterization setup
+- Provide neccesary output capacitance loads
+- Provide neccesary simulation commands
+Now all these 8 steps are fed in together as a configuration file to a characterization software called GUNA. This software generates timing, noise, power models. These .libs are classified as Timing 
+ characterization, power characterization and noise characterization.
+
+
+
+
+
+| Timing defintion   | value| 
+|----------|----------|
+| `slew_low_rise_thr`|`20% value`|
+|`slew_high_rise_thr`| `80% value`   |
+| `slew_low_fall_thr`| `20% value`   |
+|`slew_high_fall_thr`| `80% value`   |
+| `in_rise_thr`      | `50% value`   |
+| `in_fall_thr`      | `50% value`   |
+| `out_rise_thr`     | `50% value`   |
+| `out_fall_thr`     | `50% value`   |
+
+
+
+## Propagation Delay and Transition Time
+**Propagation delay** is the time it takes for a signal to travel from the input to the output of a circuit. It's typically measured as the time difference between when the input signal reaches 50% of its final value and when the output signal reaches 50% of its final value.
+
+If the threshold values used to measure this delay are not chosen carefully, it can result in negative delay values, which are not physically meaningful. However, even with well-chosen thresholds, the delay might still appear positive or negative due to variations in the slew rate, which is how quickly the signal transitions from one value to another.
+
+![image](https://github.com/user-attachments/assets/f1c39625-2bf0-4afd-b492-5dd4608aa694)
+
+
+``` bash
+Propagation delay = time(out_thr) - time(in_thr)
+```
+
+**Transition Time**
+Transition time is the time it takes for a signal to move between its low and high states (or vice versa). It’s typically measured between the points where the signal reaches 10% and 90% of its final value, or sometimes between 20% and 80%. This metric is crucial for understanding the speed of signal changes in a circuit.
+
+
+``` bash
+Rise transition time = time(slew_high_rise_thr) - time (slew_low_rise_thr)
+
+Low transition time = time(slew_high_fall_thr) - time (slew_low_fall_thr)
+```
+
+
 
