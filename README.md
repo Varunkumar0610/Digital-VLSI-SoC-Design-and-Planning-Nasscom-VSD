@@ -31,7 +31,7 @@ VSD Squadron Board: The VSD Board is shown below. Our focus is on the enclosed r
 
 ![image](https://github.com/user-attachments/assets/844ea7fc-f4f4-4353-ae5d-d75a4507d075)
 
-## Section - 1 Introduction of Open-Source EDA, OpenLane and Sky130 PDK
+# Section - 1 Introduction of Open-Source EDA, OpenLane and Sky130 PDK
 
 ### Theory
 
