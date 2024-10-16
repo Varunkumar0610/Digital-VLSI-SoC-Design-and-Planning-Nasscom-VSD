@@ -87,7 +87,7 @@ Expand or Collapse
 2. RTL and synthesis of RISC-V based CPU core - picorv32
 3. Physical design implementation of picorv32
 
-![image](https://github.com/user-attachments/assets/6c5a0fb7-685b-4839-a234-96cb57140a50)
+![image](https://github.com/user-attachments/assets/0e283349-9aa3-460c-91f7-9f790f3e3c06)
 
 #### Open-source Implementation
 
@@ -108,7 +108,7 @@ Expand or Collapse
 
 * ASIC design is a complex step that involves tons of steps, various methodologies and respective EDA tools which are all required for successful ASIC implementation which is achieved though an ASIC flow which is nothing but a piece of software that pulls different tools togather to carry out the design process.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/1762d6d6-c5f8-4bd9-8a3d-968eb4360889)
+![image](https://github.com/user-attachments/assets/e781ba43-c2b0-4684-9ab9-c6422cdb15c8)
 
 #### OpenLANE Open-source ASIC Design Implementation Flow
 
@@ -135,61 +135,61 @@ Expand or Collapse
 
 * The main objective of the ASIC Design Flow is to take the design from the RTL (Register Transfer Level) all the way to the GDSII, which is the format used for the final fabrication layout.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/533f58ee-4524-4a18-abb5-36b4d6a56b1f)
+![image](https://github.com/user-attachments/assets/f3d32182-4baf-4ded-9bc7-db4e90703909)
 
 * Synthesis is the process of convertion or translation of design RTL into circuits made out of Standard Cell Libraries (SCL) the resultant circuit is described in HDL and is usually reffered to as the Gate-Level Netlist.
 * Gate-Level Netlist is functionally equivalent to the RTL.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e43891a0-ab09-4df2-898d-7e843158e936)
+![image](https://github.com/user-attachments/assets/1fd60033-ad48-4b92-84a2-c7925ff82f21)
 
 * The fundemental building blocks which are the standard cells have regular layouts.
 * Each cell has different views/models which are utilised by different EDA tools like liberty view with electrical models of the cells, HDL behavioral models, SPICE or CDL views of the cells, Layout view which include GDSII view which is the detailed view and LEF view which is the abstract view.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/48df884c-c894-4a2a-a511-09321c208d6b)
+![image](https://github.com/user-attachments/assets/fe7149d5-a27a-4dae-98f7-dd2ef681ad43)
 
 * Chip Floor Planning
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/38ecd866-ac83-42c7-83ba-2ba995f9ba4e)
+![image](https://github.com/user-attachments/assets/1c63c5a7-2753-42f8-bbfd-1a629be240b7)
 
 * Macro Floor Planning
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/35ac760c-bba9-4bd1-9c65-e8ceeee2ccf5)
+![image](https://github.com/user-attachments/assets/a53638b2-7fd9-49b2-99b5-7f59873a0f2e)
 
 * Power Planning typically uses upper metal layers for power distribution since thay are thicker than lower metal layers and so have lower resistance and PP is done to avoid electron migration and IR drops.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/f18013a7-e4c7-4a6d-ba53-33362c04689a)
+![image](https://github.com/user-attachments/assets/59abf682-d95b-4efc-ae07-b0b9a798f5b3)
 
 * Placement
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/3654398b-40bc-4e42-9205-77f673d5584c)
+![image](https://github.com/user-attachments/assets/9a7e10cf-5814-49e7-8e0d-829625775e88)
 
 * Global placement provide approximate locations for all cells based on connectivity but in this stage the cells may be overlapped on each other and in detailed placement the positions obtained from global placements are minimally altered to make it legal (non-overlapping and in site-rows)
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/817c504d-0b8e-4a0a-9c3c-e9d110c23535)
+![image](https://github.com/user-attachments/assets/ba914ca6-010c-4294-b070-efa7cf3a6ea0)
 
 * Clock Tree Synthesis
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/6db284d4-065f-450a-9200-a6e6cbfd7fbb)
+![image](https://github.com/user-attachments/assets/7950d749-b89a-4bfe-8ce3-2c7ec39cd826)
 
 * Clock skew is the time difference in arrival of clock at different components.
 * Routing
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/7458495f-b527-4f21-813e-8dbcbf29ed9b)
+![image](https://github.com/user-attachments/assets/0dda1840-76f3-4e4c-bfc3-3c73cd14196d)
 
 * skywater PDK has 6 routing layers in which the lowest layer is called the local interconnect layer which is a Titanium Nitride layer the following 5 layers are all Aluminium layers.
 
-![stackup](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/e4438c12-d83e-4083-a58f-33a410a47927)
+![image](https://github.com/user-attachments/assets/2b5f6dcc-054a-4974-a94a-3e326c9fa933)
 
 * Global and Detailed Routing
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/b54ebd4c-127a-441f-829e-6000531e9b8d)
+![image](https://github.com/user-attachments/assets/9351ea3b-a8f8-4e87-afb8-702d1fb97251)
 
 * Once done with the routing the final layout can be generated which undergoes various Sign-Off checks.
 * Design Rules Checking (DRC) which verifies that the final layout honours all design fabrication rules.
 * Layout Vs Schematic (LVS) which verifies that the final layout functionality matches the gate-level netlist that we started with.
 * Static Timing Analysis (STA) to verify that the design runs at the designated clock frequency.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d8bc72cd-2fe9-4ae2-9431-68a6fa77c671)
+![image](https://github.com/user-attachments/assets/c6201424-4c40-4c0e-844c-030794118b40)
 
 </details>
 
@@ -240,9 +240,9 @@ exit
 
 Screenshots of running each commands
 
-![1](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/d19f6d0f-16f8-4e79-aa5a-f2a34b9fb203)
-![2](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/5e03c8ca-8c7f-4579-a7bc-10161007910e)
-![3](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/5f196a31-059e-4192-a208-8a15ba1a0dd7)
+![image](https://github.com/user-attachments/assets/ca0b78fd-819e-4be3-baa6-d43ba0f6d0d9)
+![image](https://github.com/user-attachments/assets/aedb2668-7537-441c-8453-62ca13bd9281)
+![image](https://github.com/user-attachments/assets/44cce33a-07ee-490e-9311-3186b978edeb)
 
 #### 2. Calculate the flop ratio.
 
@@ -282,7 +282,7 @@ Aspect Ratio = Height of the Chip/Width of the Chip
 - Importance: The aspect ratio affects the chip's mechanical stability, ease of packaging, and manufacturability. Ideally, the aspect ratio should be close to 1 (i.e., the chip is nearly square), as this minimizes stress and simplifies the packaging process. However, depending on the application and design constraints, the aspect ratio may vary.
 
 
-![Screenshot 2024-08-24 221207](https://github.com/user-attachments/assets/c41d2c60-621c-4e05-a93e-bfe2dc929d52)
+![image](https://github.com/user-attachments/assets/1dd42934-d636-4ace-99e5-ca0fbe7536b2)
 
 **Concept of pre-placed cells and de-coupling capacitors:**
 - **Pre-placed Cells:**
@@ -297,16 +297,16 @@ Decoupling capacitors are small-value capacitors placed between the power supply
 ```bash
 run_floorplan
 ```
-![Screenshot from 2024-08-30 21-50-33](https://github.com/user-attachments/assets/7c5ccc63-ce5e-4c6c-8729-c41e0280defb)
+![image](https://github.com/user-attachments/assets/042a8615-1520-44f7-aa4a-85c6e5f5beb1)
 
-![Screenshot from 2024-08-30 21-50-41](https://github.com/user-attachments/assets/33a247a0-b421-4293-ab8f-07d3bc7e0b3d)
+![image](https://github.com/user-attachments/assets/e9acad0b-9159-498b-82ac-6891a2fd5f7b)
 
 **Picorv32a floorplan def file:**
 
 
-![Screenshot from 2024-08-30 22-01-51](https://github.com/user-attachments/assets/00e525ea-022c-497c-99cc-4b920998e174)
+![image](https://github.com/user-attachments/assets/83944c67-4504-48ba-b56a-1410d20ec6a3)
 
-![Screenshot from 2024-08-30 21-59-56](https://github.com/user-attachments/assets/961be1a5-bba4-4001-b640-c6759e889625)
+![image](https://github.com/user-attachments/assets/8830c6b8-f95f-4662-81de-d73e5f4a277c)
 
 According to floorplan def
 ```math
@@ -428,10 +428,10 @@ Placement plays a crucial role in VLSI (Very Large Scale Integration) design. It
 
 ``` magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def & ```
 
-![Screenshot from 2024-08-26 18-04-15](https://github.com/user-attachments/assets/ee8746ed-8c5d-429f-a0b1-4f8b11288677)
-![Screenshot from 2024-08-26 18-11-42](https://github.com/user-attachments/assets/e8130182-c3f6-4658-8d2b-ad2b5f3b6385)
-![Screenshot from 2024-08-26 18-12-21](https://github.com/user-attachments/assets/590e4e06-9d00-45be-bbe2-59636d6a5f11)
-![Screenshot from 2024-08-26 18-16-10](https://github.com/user-attachments/assets/8051e35b-b5b8-43b1-9d4d-7a1f1dc5838a)
+![image](https://github.com/user-attachments/assets/6cac8896-8b3d-400a-b7ed-b185e15080ad)
+![image](https://github.com/user-attachments/assets/8def6e26-dcd0-4ffb-af0a-6ff056e93efe)
+![image](https://github.com/user-attachments/assets/5e293784-1d45-4416-963f-c9248a45630e)
+![image](https://github.com/user-attachments/assets/f06324d8-e432-40a1-86c0-275d8e205932)
 
 ## CELL DESIGN AND CHARACETRIZATION FLOWS
 
@@ -524,7 +524,7 @@ Here’s a step-by-step guide for performing a VTC SPICE simulation:
 
 **Interpretation:**  The VTC is analyzed to determine the circuit's performance characteristics, such as gain, input offset voltage, output swing, and the presence of any non-linearities or distortion.
 
-![Screenshot 2024-08-31 21 19 24](https://github.com/user-attachments/assets/8687e29c-48c4-4f27-adda-fcf81aa23011)
+![image](https://github.com/user-attachments/assets/07b5ec33-5ff2-4917-af51-da83625ac6ef)
 
 
 
@@ -578,7 +578,7 @@ Dynamic simulation, also known as transient analysis, involves analyzing the cir
 
 **Transient Response:**  The overall response of the inverter to input signals, including overshoot, undershoot, and ringing.
     
-![maxresdefaul4t](https://github.com/user-attachments/assets/5a72fdab-6149-4377-a1b9-b53323efa131)
+![image](https://github.com/user-attachments/assets/5e041e54-2c0f-4896-b943-a777bf059e09)
 
 
 
@@ -652,7 +652,7 @@ Final Testing: The packaged chips are tested again to ensure they meet the requi
 
 ![Assigning-the-names-of-NMOS-and-PMOS](https://github.com/user-attachments/assets/936498d3-3e2e-41d5-8ee4-da89fd7c5e7c)
 
-![Screenshot 2024-08-31 16 28 33](https://github.com/user-attachments/assets/d2f5f5f2-9e34-4a67-8bc8-ec337f192e6c)
+![image](https://github.com/user-attachments/assets/0ca27939-62b0-4af4-89bd-e0e6bd6dc504)
 
 ### LABs Exercise
 
