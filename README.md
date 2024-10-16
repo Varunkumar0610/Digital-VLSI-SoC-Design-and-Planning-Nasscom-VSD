@@ -87,7 +87,7 @@ Expand or Collapse
 2. RTL and synthesis of RISC-V based CPU core - picorv32
 3. Physical design implementation of picorv32
 
-![Screenshot (283)](https://github.com/fayizferosh/risc-v-myth-report/assets/63997454/832f0ea6-2d60-4d9a-937c-a2dedd5f8cac)
+![image](https://github.com/user-attachments/assets/6c5a0fb7-685b-4839-a234-96cb57140a50)
 
 #### Open-source Implementation
 
@@ -104,7 +104,7 @@ Expand or Collapse
 * Since, the PDK contained variety of informations, and so they were distributed only under NDAs (Non-Disclosure Agreements) which made it in-accessible to the public.
 * Recently, Google worked out an agreement with skywater to open-source the PDK for the 130nm process by skywater Technology, as a result on 30 June 2020 Google released the first ever open-source PDK.
 
-![image](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/87384374-e66b-4ec6-b9c4-3fb92ad4d275)
+![image](https://github.com/user-attachments/assets/b8b55e09-ef4f-4fd4-80ec-83696df2cd4c)
 
 * ASIC design is a complex step that involves tons of steps, various methodologies and respective EDA tools which are all required for successful ASIC implementation which is achieved though an ASIC flow which is nothing but a piece of software that pulls different tools togather to carry out the design process.
 
