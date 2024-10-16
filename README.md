@@ -23,7 +23,7 @@ Comments
 - [Section - 2 Good Floorplan vs bad Floorplan and Introduction to library cells](#Section---2-Good-Floorplan-vs-bad-Floorplan-and-Introduction-to-library-cells)
 - [Section - 3 Design Library Cell using magic layout and ngspice charcterization](#Section---3-Design-Library-Cell-using-magic-layout-and-ngspice-charcterization)
 - [Section - 4 Pre Lay-out Timing Analysis and Importance of Good clock Tree](#Section---4-Pre-Lay-out-Timing-Analysis-and-Importance-of-Good-clock-Tree)
-- [Section - 5 Final Steps for RTL2GDS Using TritonROUTE and openSTA](#Section--5-Final-Steps-for-RTL2GDS-Using-TritonROUTE-and-openSTA)
+- [Section - 5 Final Steps for RTL2GDS Using TritonROUTE and openSTA](#Section---5-Final-Steps-for-RTL2GDS-Using-TritonROUTE-and-openSTA)
   
 
 
@@ -80,7 +80,7 @@ Expand or Collapse
 
 * The output of the compiler are instructions and the output of the assembler is the binary pattern. Now, we need some RTL (a Hardware Description Language) which understands and implements the particular instructions. Then, this RTL is synthesised into a netlist in form of gates which is fabricated into the chip through a physical design implementation.
 
-![Screenshot (282)](https://github.com/fayizferosh/risc-v-myth-report/assets/63997454/e349cb06-45e3-4ae4-b85f-9020a0a62737)
+![image](https://github.com/user-attachments/assets/29bea94c-a074-4a4f-998d-deb3c57510f2)
 
 * There are mainly 3 different parts in this course. They are:
 1. RISC-V ISA
