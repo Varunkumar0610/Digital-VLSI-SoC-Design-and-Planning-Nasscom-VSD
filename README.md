@@ -752,7 +752,7 @@ fall\_transition = (20 % of 3.3v) - (80% of 3.3v)
                 = 0.04253\ ns
 ```
                 
-  ![Screenshot from 2024-08-30 18-18-42](https://github.com/user-attachments/assets/7fc13cca-f173-40e0-8c3b-ac0d6a6858c8)
+ ![image](https://github.com/user-attachments/assets/2d02dfa8-f8e6-4098-995b-71cf2decd805)
 
                 
   ##### 5.c) cell rise delay: (50% of o/p rise) - (50% of i/p fall)
@@ -762,7 +762,7 @@ fall\_transition = (20 % of 3.3v) - (80% of 3.3v)
                 = 0.0589\ ns
 ```
                 
-  ![Screenshot from 2024-08-30 18-24-04](https://github.com/user-attachments/assets/8f885539-8b54-4e08-b39b-6eb989749332)
+ ![image](https://github.com/user-attachments/assets/85d0076f-04ce-46a8-ad8e-1d8b4c4ba54b)
 
   ##### 5.d) cell fall delay: (50% of o/p fall) - (50% of i/p rise)
 ```math
@@ -771,22 +771,22 @@ fall\_transition = (20 % of 3.3v) - (80% of 3.3v)
                 = 0.02657\ ns
 ```
                 
-  ![Screenshot from 2024-08-30 18-26-33](https://github.com/user-attachments/assets/9636b765-cf0f-4b80-9bd0-c28927982734)
+ ![image](https://github.com/user-attachments/assets/4e986827-07df-4ec4-8c1b-2dfdc67ac4cb)
 
 #### 6. Introduction to Magic tool and DRC
 
-![Screenshot from 2024-08-30 23-22-53](https://github.com/user-attachments/assets/23ff1ac9-6b2f-440e-843b-77a82dc0635f)
+![image](https://github.com/user-attachments/assets/13b20e46-d226-479b-abc2-b7fe6069cc75)
 
-![Screenshot from 2024-08-30 23-37-07](https://github.com/user-attachments/assets/0c2c91cc-a865-477c-abdc-9c469bd7f1c7)
+![image](https://github.com/user-attachments/assets/e06146c8-ef52-463e-a1b1-0b3b5e3fa549)
 
-![Screenshot from 2024-08-30 23-38-48](https://github.com/user-attachments/assets/6c03bc22-8909-492f-ad8d-6a04e9bc2516)
+![image](https://github.com/user-attachments/assets/04462b54-555f-49df-a06a-8af57fb3e3eb)
 
-![Screenshot from 2024-08-31 00-13-06](https://github.com/user-attachments/assets/e9368ab6-47cb-4a22-b284-549108f167b9)
+![image](https://github.com/user-attachments/assets/682edf39-66b4-4b88-979c-c6773de13974)
 
-![Screenshot from 2024-08-31 00-22-14](https://github.com/user-attachments/assets/d3aa46d6-bbde-4273-b744-910a597e6f75)
+![image](https://github.com/user-attachments/assets/fd4101a9-ae66-40a4-8bd7-fd9652321248)
 
-![Screenshot from 2024-08-31 00-27-51](https://github.com/user-attachments/assets/3eb2dc89-30be-4c20-a408-adec09a08a4b)
+![image](https://github.com/user-attachments/assets/db8b8714-ea87-4595-9a06-d01ca4ae3e0e)
 
-![Screenshot from 2024-08-31 00-41-17](https://github.com/user-attachments/assets/6aa6b086-f3a1-4599-8aa3-f7cc21689653)
+![image](https://github.com/user-attachments/assets/5b07a766-cc21-4e37-9aac-cf8e018fffb3)
 
 # Section - 4 Pre Lay-out Timing Analysis and Importance of Good clock Tree
