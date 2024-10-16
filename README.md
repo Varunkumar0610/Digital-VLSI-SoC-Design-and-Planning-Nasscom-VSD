@@ -80,7 +80,7 @@ Expand or Collapse
 
 * The output of the compiler are instructions and the output of the assembler is the binary pattern. Now, we need some RTL (a Hardware Description Language) which understands and implements the particular instructions. Then, this RTL is synthesised into a netlist in form of gates which is fabricated into the chip through a physical design implementation.
 
-![image](https://github.com/user-attachments/assets/29bea94c-a074-4a4f-998d-deb3c57510f2)
+![image](https://github.com/user-attachments/assets/ef7153c6-0319-4e5a-9a47-8411c22ad74a)
 
 * There are mainly 3 different parts in this course. They are:
 1. RISC-V ISA
@@ -104,7 +104,7 @@ Expand or Collapse
 * Since, the PDK contained variety of informations, and so they were distributed only under NDAs (Non-Disclosure Agreements) which made it in-accessible to the public.
 * Recently, Google worked out an agreement with skywater to open-source the PDK for the 130nm process by skywater Technology, as a result on 30 June 2020 Google released the first ever open-source PDK.
 
-![image](https://github.com/user-attachments/assets/b8b55e09-ef4f-4fd4-80ec-83696df2cd4c)
+![image](https://github.com/user-attachments/assets/75cc3dcd-4b5c-4c38-8042-887fe4d82130)
 
 * ASIC design is a complex step that involves tons of steps, various methodologies and respective EDA tools which are all required for successful ASIC implementation which is achieved though an ASIC flow which is nothing but a piece of software that pulls different tools togather to carry out the design process.
 
@@ -135,12 +135,12 @@ Expand or Collapse
 
 * The main objective of the ASIC Design Flow is to take the design from the RTL (Register Transfer Level) all the way to the GDSII, which is the format used for the final fabrication layout.
 
-![image](https://github.com/user-attachments/assets/f3d32182-4baf-4ded-9bc7-db4e90703909)
+![image](https://github.com/user-attachments/assets/826e8a9b-2b08-40a7-bc1d-767b632147e5)
 
 * Synthesis is the process of convertion or translation of design RTL into circuits made out of Standard Cell Libraries (SCL) the resultant circuit is described in HDL and is usually reffered to as the Gate-Level Netlist.
 * Gate-Level Netlist is functionally equivalent to the RTL.
 
-![image](https://github.com/user-attachments/assets/1fd60033-ad48-4b92-84a2-c7925ff82f21)
+![image](https://github.com/user-attachments/assets/8771de52-e119-4a06-82be-6a53162c3040)
 
 * The fundemental building blocks which are the standard cells have regular layouts.
 * Each cell has different views/models which are utilised by different EDA tools like liberty view with electrical models of the cells, HDL behavioral models, SPICE or CDL views of the cells, Layout view which include GDSII view which is the detailed view and LEF view which is the abstract view.
@@ -149,15 +149,16 @@ Expand or Collapse
 
 * Chip Floor Planning
 
-![image](https://github.com/user-attachments/assets/1c63c5a7-2753-42f8-bbfd-1a629be240b7)
+![image](https://github.com/user-attachments/assets/51cc2616-17f0-4e78-9770-ed16d619b2f5)
 
 * Macro Floor Planning
 
-![image](https://github.com/user-attachments/assets/a53638b2-7fd9-49b2-99b5-7f59873a0f2e)
+![image](https://github.com/user-attachments/assets/70008d3b-d752-41e3-9634-ccc5b25ce889)
 
 * Power Planning typically uses upper metal layers for power distribution since thay are thicker than lower metal layers and so have lower resistance and PP is done to avoid electron migration and IR drops.
 
-![image](https://github.com/user-attachments/assets/59abf682-d95b-4efc-ae07-b0b9a798f5b3)
+![image](https://github.com/user-attachments/assets/2800bd74-a178-4119-b9f3-8da76ccca9bf)
+
 
 * Placement
 
@@ -169,12 +170,12 @@ Expand or Collapse
 
 * Clock Tree Synthesis
 
-![image](https://github.com/user-attachments/assets/7950d749-b89a-4bfe-8ce3-2c7ec39cd826)
+![image](https://github.com/user-attachments/assets/4ce59c66-f38f-425c-bdb4-30efb8761b1b)
 
 * Clock skew is the time difference in arrival of clock at different components.
 * Routing
 
-![image](https://github.com/user-attachments/assets/0dda1840-76f3-4e4c-bfc3-3c73cd14196d)
+![image](https://github.com/user-attachments/assets/89f6f1fa-4cc5-4914-a425-6ce57219bb7d)
 
 * skywater PDK has 6 routing layers in which the lowest layer is called the local interconnect layer which is a Titanium Nitride layer the following 5 layers are all Aluminium layers.
 
@@ -189,7 +190,7 @@ Expand or Collapse
 * Layout Vs Schematic (LVS) which verifies that the final layout functionality matches the gate-level netlist that we started with.
 * Static Timing Analysis (STA) to verify that the design runs at the designated clock frequency.
 
-![image](https://github.com/user-attachments/assets/c6201424-4c40-4c0e-844c-030794118b40)
+![image](https://github.com/user-attachments/assets/4fc50520-ba98-4bf6-80af-65367e7153af)
 
 </details>
 
@@ -299,7 +300,7 @@ run_floorplan
 ```
 ![image](https://github.com/user-attachments/assets/042a8615-1520-44f7-aa4a-85c6e5f5beb1)
 
-![image](https://github.com/user-attachments/assets/e9acad0b-9159-498b-82ac-6891a2fd5f7b)
+![image](https://github.com/user-attachments/assets/7b72fd66-3ecb-47dd-918d-e5d7e01b96e8)
 
 **Picorv32a floorplan def file:**
 
@@ -429,7 +430,7 @@ Placement plays a crucial role in VLSI (Very Large Scale Integration) design. It
 ``` magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def & ```
 
 ![image](https://github.com/user-attachments/assets/6cac8896-8b3d-400a-b7ed-b185e15080ad)
-![image](https://github.com/user-attachments/assets/8def6e26-dcd0-4ffb-af0a-6ff056e93efe)
+![image](https://github.com/user-attachments/assets/d9d9c1fe-0e6e-4fc6-8d40-31f600e8804f)
 ![image](https://github.com/user-attachments/assets/5e293784-1d45-4416-963f-c9248a45630e)
 ![image](https://github.com/user-attachments/assets/f06324d8-e432-40a1-86c0-275d8e205932)
 
@@ -652,7 +653,7 @@ Final Testing: The packaged chips are tested again to ensure they meet the requi
 
 ![Assigning-the-names-of-NMOS-and-PMOS](https://github.com/user-attachments/assets/936498d3-3e2e-41d5-8ee4-da89fd7c5e7c)
 
-![image](https://github.com/user-attachments/assets/0ca27939-62b0-4af4-89bd-e0e6bd6dc504)
+![image](https://github.com/user-attachments/assets/cc4cf6af-32ed-4764-ac14-336ce3fc92c8)
 
 ### LABs Exercise
 
@@ -1160,7 +1161,7 @@ Abutment of power pins with other cell from library clearly visible
 
 #### 9. Screenshot of sta.conf
 ![image](https://github.com/user-attachments/assets/3e58d1db-8039-4091-9a59-3f60b96ae125)
-![image](https://github.com/user-attachments/assets/76519b1d-8db8-4a99-bdf4-36efbde03e88)
+![image](https://github.com/user-attachments/assets/4af17f55-3da1-4c91-bc82-073f8033b806)
 
 again run_synthesis, then floorplan, placement
 ![image](https://github.com/user-attachments/assets/8b056129-156f-4197-b634-3343c0eba28a)
