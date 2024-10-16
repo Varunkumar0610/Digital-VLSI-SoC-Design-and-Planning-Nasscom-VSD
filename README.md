@@ -23,6 +23,8 @@ Comments
 - [Section - 2 Good Floorplan vs bad Floorplan and Introduction to library cells](#Section---2-Good-Floorplan-vs-bad-Floorplan-and-Introduction-to-library-cells)
 - [Section - 3 Design Library Cell using magic layout and ngspice charcterization](#Section---3-Design-Library-Cell-using-magic-layout-and-ngspice-charcterization)
 - [Section - 4 Pre Lay-out Timing Analysis and Importance of Good clock Tree](#Section---4-Pre-Lay-out-Timing-Analysis-and-Importance-of-Good-clock-Tree)
+- [Section - 5 Final Steps for RTL2GDS Using TritonROUTE and openSTA](#Section--5-Final-Steps-for-RTL2GDS-Using-TritonROUTE-and-openSTA)
+  
 
 
 ## Overview Of QFN-48 Chip (PicoRV32 - A Size-Optimized RISC-V CPU)
@@ -790,3 +792,425 @@ fall\_transition = (20 % of 3.3v) - (80% of 3.3v)
 ![image](https://github.com/user-attachments/assets/5b07a766-cc21-4e37-9aac-cf8e018fffb3)
 
 # Section - 4 Pre Lay-out Timing Analysis and Importance of Good clock Tree
+
+### 1-Delay Table
+
+In physical design, a delay table is a data structure used to model the delay characteristics of standard cells or interconnects in a digital circuit.
+
+#### Purpose
+**Estimate Delays:**  Delay tables help in estimating the propagation delay through gates or along wires, which is crucial for timing analysis.
+
+#### Delay Values  
+The actual propagation delays, typically provided for different combinations of input slew and output load.
+
+#### Usage
+**Static Timing Analysis (STA):** Delay tables feed information into STA tools to evaluate the timing performance of a design.
+
+**Cell Libraries:** Standard cell libraries include delay tables for each cell type, allowing EDA tools to accurately model and simulate circuit behavior.
+#### Types
+**Linear Delay Models:** Simplified models that use linear equations.
+
+**Non-linear Delay Models:** More complex and accurate, capturing variations due to non-linear effects.
+#### Importance
+Accuracy: Provides accurate timing information, crucial for ensuring that the design meets its timing constraints.
+
+Optimization: Helps in identifying critical paths and optimizing them to improve performance.
+
+![image](https://github.com/user-attachments/assets/7cf04801-00cb-46b9-8548-fcdeb56edfb0)
+
+
+
+### 2-Setup time and Hold time of Flop
+
+#### Set Up Time Analysis
+Setup time is the minimum time period before the clock edge during which the data input must be stable.
+
+#### Purpose:
+Ensures that the data is correctly sampled by the flip-flop on the active clock edge.
+
+#### Analysis Steps:
+Identify Critical Paths: Trace the longest path from one flip-flop to the next, including combinational logic.
+
+**Calculate Data Path Delay**: Sum up the delays of all elements (gates, interconnects) in the data path.
+
+**Compare with Setup Time:** Ensure that the data path delay plus setup time is less than the clock period.
+
+Data Path Delay + Setup Time < Clock Period
+
+Adjust if Necessary: If the condition isn’t met, optimize the design by reducing delays, increasing clock period, or modifying the path.
+
+#### Hold Time Analysis
+Hold time is the minimum time period after the clock edge during which the data input must remain stable.
+
+#### Purpose:
+Prevents the new data from being captured too early, ensuring the current data is held long enough.
+
+#### Analysis Steps:
+**Identify Critical Paths:** Examine paths where new data might overwrite current data too soon.
+
+**Calculate Data Path Delay:** Consider the minimum delay from the clock edge to the data input.
+
+**Compare with Hold Time:** Ensure that the data path delay is greater than the hold time.
+
+Data Path Delay>Hold Time
+
+**Adjust if Necessary:** If the condition isn’t met, add buffers or delay elements to increase path delay.
+
+#### Importance
+**Setup Time Violations:** Can lead to incorrect data being captured, causing functional errors.
+
+**Hold Time Violations:** Can result in data corruption as new data overwrites old data prematurely.
+
+![image](https://github.com/user-attachments/assets/60865da8-5bff-418e-a727-82c8c7ed644e)
+
+
+
+
+### 3-Clock tree routing and buffering
+
+Clock tree routing and buffering are crucial steps in the physical design phase of integrated circuit (IC) design. These steps ensure that the clock signal is distributed efficiently and uniformly across the entire chip to all sequential elements (like flip-flops) with minimal skew and latency.
+
+#### a. Clock Tree Synthesis (CTS):
+**Purpose:** The goal of clock tree synthesis is to distribute the clock signal from a single clock source (usually a Phase-Locked Loop (PLL) or a clock generator) to all the sequential elements in the design (like flip-flops) with minimal skew and balanced delays.
+
+#### Challenges:
+**Clock Skew:** The difference in arrival times of the clock signal at different sequential elements. Skew can lead to timing violations, so minimizing it is a primary goal.
+
+**Clock Latency:** The delay from the clock source to a flip-flop or other sequential element. Latency needs to be controlled to meet timing requirements.
+
+#### Power Consumption: 
+
+Clock networks are often the most power-consuming part of the chip. Optimizing for lower power while maintaining performance is crucial.
+
+#### b. Clock Tree Routing:
+
+**Tree Structure:** The clock distribution network is usually constructed as a tree (hence the name "clock tree"). This tree structure helps in balancing the delays and skew.
+
+#### Clock Tree Topologies:
+- H-Tree: A hierarchical tree structure that is symmetric and balanced, often used in regular grid layouts.
+
+- X-Tree, Y-Tree: Variations of the H-tree, used based on specific design needs.
+
+- Spine: A clock distribution method where the clock is routed along a central "spine" and branches out to different regions. This is common in large, hierarchical designs.
+
+**Routing Techniques:**
+- Minimal Skew Routing: Ensuring that all paths from the clock source to the clock sinks (sequential elements) are balanced to minimize skew.
+- Buffered Clock Tree: Inserting buffers along the clock tree to manage delay and drive strength, ensuring that the clock signal reaches all parts of the circuit with sufficient strength and minimal degradation.
+
+#### c. Clock Tree Buffering:
+**Why Buffers are Needed:**
+- Load Management: The clock signal needs to drive a large number of flip-flops and other clocked elements. Buffers are used to amplify the clock signal and drive these loads effectively.
+- Delay Control: Buffers help in balancing the delay in different paths of the clock tree, which is crucial for minimizing skew.
+- Noise Reduction: By buffering the clock signal, noise introduced by long interconnects can be reduced.
+
+**Types of Buffers:**
+- Inverters: Simple buffers that invert the signal. Sometimes used in pairs to maintain the same logic level while buffering.
+- Dedicated Clock Buffers: Specially designed buffers that are optimized for driving the clock signal with high fan-out and minimal jitter.
+- Buffer Insertion: Buffers are strategically inserted at points in the clock tree where the clock signal needs to be amplified or where delay needs to be controlled.
+The placement of these buffers is determined during the Clock Tree Synthesis process using EDA tools, which optimize for delay, skew, and power consumption.
+
+#### d. Skew and Latency Management:
+- Zero-Skew Clock Tree: An ideal clock tree would have zero skew, meaning all flip-flops receive the clock signal at the exact same time. While practically impossible, the goal is to minimize skew as much as possible.
+- Useful Skew: Sometimes, intentional skew is introduced to improve timing in certain paths. This is known as useful skew and can help in meeting setup and hold time constraints.
+Clock Latency: Clock tree buffering and routing also ensure that the clock signal arrives at the flip-flops with the desired latency, which is crucial for timing closure.
+
+#### e. Post-CTS Optimization:
+After the clock tree is synthesized, further optimization steps like Clock Tree Optimization (CTO) and Post-CTS Optimization might be performed to fine-tune the clock network, ensuring that all timing requirements are met.
+- Timing Analysis: Tools perform static timing analysis (STA) to verify that the clock tree meets the required timing constraints, and any violations are corrected by adjusting the clock tree design.
+
+![image](https://github.com/user-attachments/assets/8cc70556-8af7-462b-a56e-94e240269f08)
+
+![image](https://github.com/user-attachments/assets/740cba8a-ebfa-4082-9804-f8612c1ef19f)
+
+#### 1. Fix up small DRC errors and verify the design is ready to be inserted into our flow.
+
+Conditions to be verified before moving forward with custom designed cell layout:
+* Condition 1: The input and output ports of the standard cell should lie on the intersection of the vertical and horizontal tracks.
+* Condition 2: Width of the standard cell should be odd multiples of the horizontal track pitch.
+* Condition 3: Height of the standard cell should be even multiples of the vertical track pitch.
+
+Commands to open the custom inverter layout
+
+```bash
+# Change directory to vsdstdcelldesign
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+Screenshot of tracks.info of sky130_fd_sc_hd
+
+![image](https://github.com/user-attachments/assets/cca3530c-ab93-4437-a1d7-71ec9ceadba2)
+
+Commands for tkcon window to set grid as tracks of locali layer
+
+```tcl
+# Get syntax for grid command
+help grid
+
+# Set grid values accordingly
+grid 0.46um 0.34um 0.23um 0.17um
+```
+
+Screenshot of commands run
+
+![image](https://github.com/user-attachments/assets/c679f56d-dfde-49ec-bd00-d0708a09fb60)
+
+Condition 1 verified
+
+![image](https://github.com/user-attachments/assets/d0a3fe81-fd27-4cb1-8e27-e974ee75f4d5)
+
+Condition 2 verified
+
+```math
+Horizontal\ track\ pitch = 0.46\ um
+```
+
+![image](https://github.com/user-attachments/assets/efd11f21-642e-4dcb-ac32-d4527b5c06ab)
+
+```math
+Width\ of\ standard\ cell = 1.38\ um = 0.46 * 3
+```
+
+Condition 3 verified
+
+```math
+Vertical\ track\ pitch = 0.34\ um
+```
+
+![image](https://github.com/user-attachments/assets/bd3b34c9-803a-4045-b65c-4e22e2b7dc53)
+
+```math
+Height\ of\ standard\ cell = 2.72\ um = 0.34 * 8
+```
+#### 2. Save and open the finalized layout.
+
+Command for tkcon window to save the layout with custom name
+
+```tcl
+# Command to save as
+save sky130_vsdinv.mag
+```
+
+Command to open the newly saved layout
+
+```bash
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_vsdinv.mag &
+```
+
+Screenshot of newly saved layout
+
+![image](https://github.com/user-attachments/assets/83bc01ce-6669-49ef-ad0c-fd8945edfc8c)
+
+#### 3. layout lef is generated.
+
+Command for tkcon window to write lef
+
+```tcl
+# lef command
+lef write
+```
+
+Screenshot of command run
+
+![image](https://github.com/user-attachments/assets/c814de66-a82c-4688-aa65-ee003dee0b47)
+
+Screenshot of newly created lef file
+
+![image](https://github.com/user-attachments/assets/65ab898e-f232-4c72-b258-f11f4b040d3a)
+
+#### 4. Move the new lef inside picorv32a, src design directory.
+
+Commands to copy necessary files to 'picorv32a' design 'src' directory
+
+```bash
+# Copy lef file
+cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# List and check whether it's copied
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# Copy lib files
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+# List and check whether it's copied
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+```
+
+Screenshot of commands run
+
+![image](https://github.com/user-attachments/assets/6f09c960-0ae9-41f8-bc7d-51c64b588ade)
+
+#### 5. Edit 'config.tcl' to change lib file & add new lef.
+
+Commands to be added to config.tcl to include our custom cell in the openlane flow
+
+```tcl
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+```
+
+Edited config.tcl to include the added lef and change library to ones we added in src directory
+
+![image](https://github.com/user-attachments/assets/b165f6e8-ae5f-4126-8a8a-bacf976dca14)
+
+#### 6. Run synthesis with newly inserted custom inverter cell.
+Commands to view and change parameters to improve timing and run synthesis
+
+```tcl
+# Now once again we have to prep design so as to update variables
+prep -design picorv32a -tag 24-03_10-03 -overwrite
+
+# Addiitional commands to include newly added lef to openlane flow merged.lef
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Command to display current value of variable SYNTH_STRATEGY
+echo $::env(SYNTH_STRATEGY)
+
+# Command to set new value for SYNTH_STRATEGY
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Command to display current value of variable SYNTH_BUFFERING to check whether it's enabled
+echo $::env(SYNTH_BUFFERING)
+
+# Command to display current value of variable SYNTH_SIZING
+echo $::env(SYNTH_SIZING)
+
+# Command to set new value for SYNTH_SIZING
+set ::env(SYNTH_SIZING) 1
+
+# Command to display current value of variable SYNTH_DRIVING_CELL to check whether it's the proper cell or not
+echo $::env(SYNTH_DRIVING_CELL)
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+```
+![image](https://github.com/user-attachments/assets/32486db5-26dd-408c-89bd-c6fa3d93abab)
+
+![image](https://github.com/user-attachments/assets/5fdf8128-d494-43b7-b746-cc75c1436eaf)
+![image](https://github.com/user-attachments/assets/25add0b7-436f-4f64-874e-126a949351bd)
+
+#### 7. Run floorplan and placement and verify the cell is accepted in PnR flow.
+
+Now that our custom inverter is properly accepted in synthesis we can now run floorplan using following command
+
+```tcl
+# Now we can run floorplan
+run_floorplan
+```
+Since we are facing unexpected un-explainable error while using `run_floorplan` command, we can instead use the following set of commands available based on information from `Desktop/work/tools/openlane_working_dir/openlane/scripts/tcl_commands/floorplan.tcl` and also based on `Floorplan Commands` section in `Desktop/work/tools/openlane_working_dir/openlane/docs/source/OpenLANE_commands.md`
+
+```tcl
+# Follwing commands are alltogather sourced in "run_floorplan" command
+init_floorplan
+place_io
+tap_decap_or
+```
+![image](https://github.com/user-attachments/assets/7a0ce107-ad01-47b4-b0ec-57d3ebc0361d)
+
+![image](https://github.com/user-attachments/assets/528d7c38-30ab-4345-9ebd-982182b316f0)
+
+Now that floorplan is done we can do placement using following command
+
+```tcl
+# Now we are ready to run placement
+run_placement
+```
+![image](https://github.com/user-attachments/assets/bea91c36-88cd-467e-a999-a37aaa6f0dc2)
+
+Commands to load placement def in magic in another terminal
+
+```bash
+# Change directory to path containing generated placement def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/24-03_10-03/results/placement/
+
+# Command to load the placement def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+
+Screenshot of placement def in magic
+
+![image](https://github.com/user-attachments/assets/be15452c-953f-41a6-af15-8bdff7d80322)
+
+Screenshot of custom inverter inserted in placement def with proper abutment
+
+![image](https://github.com/user-attachments/assets/a3f852b9-9e2b-49a4-b8df-e8b61a6b365c)
+
+Command for tkcon window to view internal layers of cells
+
+```tcl
+# Command to view internal connectivity layers
+expand
+```
+
+Abutment of power pins with other cell from library clearly visible
+
+![image](https://github.com/user-attachments/assets/251a1fb5-b49b-4de7-ba43-906c90d0bd88)
+![image](https://github.com/user-attachments/assets/58839704-747c-4e86-bc29-9278811ecdbb)
+
+#### 8. Screenshot of my_base.sdc
+![image](https://github.com/user-attachments/assets/a45b5bff-3676-478c-aa83-65248ccb6da2)
+
+#### 9. Screenshot of sta.conf
+![image](https://github.com/user-attachments/assets/3e58d1db-8039-4091-9a59-3f60b96ae125)
+![image](https://github.com/user-attachments/assets/76519b1d-8db8-4a99-bdf4-36efbde03e88)
+
+again run_synthesis, then floorplan, placement
+![image](https://github.com/user-attachments/assets/8b056129-156f-4197-b634-3343c0eba28a)
+
+![image](https://github.com/user-attachments/assets/b1516239-1970-4bb3-9a59-a7507e872403)
+
+#### 10. Screenshot of openroad
+![image](https://github.com/user-attachments/assets/50d3d244-c1d0-4854-9123-27d29d2d535c)
+
+#### 11. Screenshot of CTS run
+
+Since we confirmed that netlist is replaced and will be loaded in PnR but since we want to follow up on the earlier 0 violation design we are continuing with the clean design to further stages
+
+Commands load the design and run necessary stages
+
+```tcl
+# Now once again we have to prep design so as to update variables
+prep -design picorv32a -tag 24-03_10-03 -overwrite
+
+# Addiitional commands to include newly added lef to openlane flow merged.lef
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Command to set new value for SYNTH_STRATEGY
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Command to set new value for SYNTH_SIZING
+set ::env(SYNTH_SIZING) 1
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+
+# Follwing commands are alltogather sourced in "run_floorplan" command
+init_floorplan
+place_io
+tap_decap_or
+
+# Now we are ready to run placement
+run_placement
+
+# Incase getting error
+unset ::env(LIB_CTS)
+
+# With placement done we are now ready to run CTS
+run_cts
+```
+![image](https://github.com/user-attachments/assets/357f5032-3ff1-4a70-b706-9dfa645b22a6)
+
+![image](https://github.com/user-attachments/assets/25841ac2-fccd-4cb2-a0ec-f2d526785eda)
+
+![image](https://github.com/user-attachments/assets/19786d1f-3191-4691-a06f-d72d314bc3ca)
+
+# Section - 5 Final Steps for RTL2GDS Using TritonROUTE and openSTA
