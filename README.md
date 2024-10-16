@@ -1,8 +1,6 @@
-<!---
-![Digital_VLSI_SoC_Design_ _Planning_(RTL2GDSII_Flow)1](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/92eb860b-7a88-4c6f-8143-ad3e09fd9c5b)
-![Digital_VLSI_SoC_Design_ _Planning_(RTL2GDSII_Flow) (1)1](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/4285c5e4-d5df-43e4-b460-ead45ff67f9b)
--->
-![Digital_VLSI_SoC_Design_ _Planning_(RTL2GDSII_Flow) (1)2](https://github.com/fayizferosh/soc-design-and-planning-nasscom-vsd/assets/63997454/5b8bdb5f-95c7-41c0-b809-711b2b8ad171)
+![image](https://github.com/user-attachments/assets/d6a9f776-218e-44f1-8144-c63680169cf2)
+
+
 # Nasscom-VSD Digital VLSI SoC Design and Planning
 
 ![Static Badge](https://img.shields.io/badge/OS-linux-orange)
@@ -494,5 +492,299 @@ Low transition time = time(slew_high_fall_thr) - time (slew_low_fall_thr)
 
 # Section - 3 Design Library Cell using magic layout and ngspice charcterization
 
+## VTC Spice Simulation
 
+Voltage Transfer Characteristic (VTC) is a key concept in electronic circuit analysis and design, especially in analog and mixed-signal integrated circuits. A VTC SPICE simulation refers to the process of using a SPICE (Simulation Program with Integrated Circuit Emphasis) simulator to analyze and plot the VTC curve of a circuit.
+
+In a VTC simulation, the input voltage of the circuit is gradually swept over a specified range, while the corresponding output voltage is measured. The plot of output voltage versus input voltage generated from this data provides valuable insights into the circuit’s linearity, gain, and various operating regions. This is especially useful for evaluating the performance of amplifiers, logic gates, and signal processing circuits.
+
+Here’s a step-by-step guide for performing a VTC SPICE simulation:
+
+- Define the circuit in SPICE using its netlist.
+- Set up a DC sweep simulation for the input voltage.
+- Specify the range over which the input voltage will vary.
+- Run the simulation to record the output voltage for each input value.
+- Plot the VTC curve (output voltage vs. input voltage).
+- Analyze the plot to evaluate the circuit’s behavior, including linearity, gain, and transition regions.
+
+**Circuit Design:** The circuit to be analyzed is designed in a schematic capture tool that is compatible with the SPICE simulator being used.
+
+**Simulation Setup:** The SPICE simulation is set up with the appropriate analysis type, which could be a DC sweep analysis if the goal is to plot the VTC over a range of DC input voltages.
+
+**nput Signal Sweep:** The input voltage source is configured to sweep across the desired range of voltages. This could be from the negative supply rail to the positive supply rail, or any other relevant range.
+
+**Output Measurement:**  The output node of the circuit is specified, and the simulator is instructed to record the voltage at this node for each input voltage step.
+
+**Simulation Run:** The simulation is run, and the SPICE engine calculates the circuit's response to each input voltage.
+
+**Data Analysis:**  The resulting data is plotted as a graph with input voltage on the x-axis and output voltage on the y-axis. This plot is the VTC of the circuit.
+
+**Interpretation:**  The VTC is analyzed to determine the circuit's performance characteristics, such as gain, input offset voltage, output swing, and the presence of any non-linearities or distortion.
+
+![Screenshot 2024-08-31 21 19 24](https://github.com/user-attachments/assets/8687e29c-48c4-4f27-adda-fcf81aa23011)
+
+
+
+### Concept on Switching Threshold
+
+The concept of the switching threshold is crucial in the context of digital circuits, particularly in logic gates and transistors. The switching threshold refers to the input voltage level at which the circuit transitions from one state to another, typically from a low (logic 0) to a high (logic 1) state or vice versa.
+
+In a digital circuit, the switching threshold is designed to be at a specific voltage level to ensure reliable operation and to minimize the effects of noise and signal degradation. The exact value of the switching threshold can vary depending on the technology and design of the circuit, but it is typically set near the midpoint of the supply voltage range.
+
+For example, in a CMOS (Complementary Metal-Oxide-Semiconductor) inverter, which is a fundamental building block of digital logic, the switching threshold is ideally at the midpoint of the supply voltage (Vdd/2). This ensures that the inverter has equal noise margins for both high and low input levels.
+
+The switching threshold is influenced by several factors, including:
+
+   **1. Device Characteristics:** The physical properties of the transistors used in the circuit, such as their threshold voltage (Vth), affect the overall switching threshold of the circuit.
+
+  **2. Supply Voltage:**  The operating voltage of the circuit can impact the switching threshold. As the supply voltage changes, the switching threshold may also shift.
+
+   **3. Temperature:** Temperature variations can cause changes in the electrical characteristics of the transistors, which can in turn affect the switching threshold.
+
+   **4. Process Variations:** Manufacturing variations can lead to differences in the electrical properties of transistors, which can influence the switching threshold of the circuit.
+
+   **5. Load Capacitance:** The capacitive load connected to the output of the circuit can affect the switching threshold due to the dynamic behavior of the circuit during switching.
+
+![image](https://github.com/user-attachments/assets/31e3b8d8-189c-40b3-bfdb-f3ec66e79c79)
+
+
+
+
+
+## Static And Dynamic Simulation of CMOS Inverter
+
+### Static Simulation
+Static simulation, also known as DC analysis, involves analyzing the circuit's behavior at DC (Direct Current) steady-state conditions. This type of simulation is used to determine the following characteristics:
+
+   Voltage Transfer Characteristic (VTC): The VTC plot shows the relationship between the input voltage (Vin) and the output voltage (Vout) of the inverter. It helps in understanding the transition between the logic levels (0 and 1) and the noise margins.
+
+**Switching Threshold (V_th):** The input voltage at which the inverter switches from one logic state to another. Ideally, for a symmetrical VTC, the switching threshold is at Vdd/2, where Vdd is the supply voltage.
+
+**Noise Margins:** The maximum noise voltage that can be tolerated at the input while the output remains in the correct logic state.
+
+**Static Power Dissipation:** The power consumed by the inverter when it is in a stable state (not switching). This is typically very low in CMOS circuits due to the low leakage currents.
+
+### Dynamic Simulation
+Dynamic simulation, also known as transient analysis, involves analyzing the circuit's behavior over time as it responds to time-varying input signals. This type of simulation is used to determine the following characteristics:
+
+**Propagation Delay (t_p):** The time it takes for the output to change in response to a change in the input. It is typically measured as the time from the 50% point of the input transition to the 50% point of the output transition.
+
+**Rise Time (t_r) and Fall Time (t_f):** The times it takes for the output to transition from 10% to 90% (rise time) and from 90% to 10% (fall time) of the output voltage swing.
+
+**Power Consumption:** The dynamic power consumed by the inverter during switching, which is a function of the switching frequency, load capacitance, and supply voltage.
+
+**Transient Response:**  The overall response of the inverter to input signals, including overshoot, undershoot, and ringing.
+    
+![maxresdefaul4t](https://github.com/user-attachments/assets/5a72fdab-6149-4377-a1b9-b53323efa131)
+
+
+
+## Layout and CMOS Fabrication Process
+
+The CMOS (Complementary Metal-Oxide-Semiconductor) fabrication process is a complex series of steps used to manufacture integrated circuits. CMOS technology is widely used in modern electronics due to its low power consumption and high-density integration capabilities. The fabrication process involves several key steps, including substrate preparation, doping, oxidation, photolithography, etching, and metallization. Here is an overview of the CMOS fabrication process:
+**1. Substrate Preparation**
+
+Starting Material: The process begins with a pure silicon wafer, which serves as the substrate.
+Cleaning: The wafer is thoroughly cleaned to remove any impurities.
+
+**2. Oxidation**
+
+Thermal Oxidation: A layer of silicon dioxide (SiO2) is grown on the surface of the silicon wafer. This oxide layer acts as an insulator and also serves as a mask for subsequent doping processes.
+
+**3. Photolithography**
+
+Photoresist Application: A light-sensitive polymer called photoresist is applied to the wafer surface.
+Exposure and Development: The wafer is exposed to ultraviolet (UV) light through a mask that contains the desired pattern. The exposed photoresist is then developed, leaving a patterned layer on the wafer.
+
+**4. Etching**
+
+Wet or Dry Etching: The areas of the wafer not protected by the photoresist are etched away using either wet chemicals or dry plasma etching.
+
+**5. Doping**
+
+Ion Implantation: Selected areas of the wafer are doped with impurities (dopants) such as boron or phosphorus to create n-type or p-type regions. This process alters the electrical properties of the silicon, creating the necessary semiconductor characteristics.
+
+**6. Isolation**
+
+Local Oxidation of Silicon (LOCOS): An oxide layer is grown in selected areas to isolate different components of the circuit.
+Trench Isolation: Alternatively, trenches can be etched and filled with oxide to achieve isolation.
+
+**7. Transistor Formation**
+
+**- Gate Oxide Growth:**  A thin layer of oxide is grown on the surface where the transistors will be formed.
+
+**- Polysilicon Deposition:** A layer of polysilicon is deposited and patterned to form the gates of the transistors.
+
+**- Spacer Formation:** Spacers are created on the sides of the gate to control the subsequent doping process.
+
+**- Source/Drain Implantation:** Dopants are implanted to form the source and drain regions of the transistors.
+
+**8. Silicidation**
+
+Silicide Formation: A silicide layer (e.g., tungsten silicide) is formed on top of the polysilicon gate and the source/drain regions to reduce resistance.
+
+**9. Interlayer Dielectric and Planarization**
+
+Dielectric Deposition: A layer of insulating material (e.g., silicon dioxide) is deposited over the entire wafer.
+Chemical Mechanical Polishing (CMP): The wafer surface is planarized using CMP to ensure a smooth surface for subsequent metallization.
+
+**10. Metallization**
+
+Metal Layers: Multiple layers of metal (e.g., aluminum or copper) are deposited and patterned to form the interconnections between transistors and other components.
+Contact and Via Formation: Contacts and vias are etched and filled with metal to connect the transistors to the metal layers.
+
+**11. Passivation**
+
+Passivation Layer: A final layer of insulating material is deposited to protect the circuit from external contaminants.
+
+**12. Testing and Packaging**
+
+Wafer Probing: The wafer is tested to identify any defective chips.
+
+Dicing: The wafer is cut into individual chips (dice).
+
+Packaging: The chips are mounted in packages, which are then sealed to protect the delicate circuitry.
+
+Final Testing: The packaged chips are tested again to ensure they meet the required specifications.
+
+![Assigning-the-names-of-NMOS-and-PMOS](https://github.com/user-attachments/assets/936498d3-3e2e-41d5-8ee4-da89fd7c5e7c)
+
+![Screenshot 2024-08-31 16 28 33](https://github.com/user-attachments/assets/d2f5f5f2-9e34-4a67-8bc8-ec337f192e6c)
+
+### LABs Exercise
+
+#### 1. IoPlacer revision & adding the "set::env" command
+
+![Screenshot from 2024-10-16 11-59-40](https://github.com/user-attachments/assets/ba67673b-4e31-4fff-8638-7626cb58e62a)
+
+
+here the the i/o pins are congested and overlapped:
+![Screenshot from 2024-10-16 12-01-52](https://github.com/user-attachments/assets/8eec0525-0623-4416-99c8-7dcd5c6e135a)
+
+#### 1. Clone custom inverter standard cell design from github repository
+
+```bash
+# Change directory to openlane
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# Clone the repository with custom inverter design
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+
+# Change into repository directory
+cd vsdstdcelldesign
+
+# Copy magic tech file to the repo directory for easy access
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+
+# Check contents whether everything is present
+ls
+
+# Command to open custom inverter layout in magic
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+Screenshot of commands run
+
+![image](https://github.com/user-attachments/assets/ea9177d6-88a4-448e-9f96-d85f5ab68509)
+
+#### 2. Load the custom inverter layout in magic and explore.
+
+Screenshot of custom inverter layout in magic
+
+![image](https://github.com/user-attachments/assets/14dcf0cf-ee07-4427-bd26-68a82ceabe35)
+
+NMOS and PMOS identified
+
+![image](https://github.com/user-attachments/assets/7f704bce-91b4-4778-a3ba-5420012cdb2c)
+![image](https://github.com/user-attachments/assets/b4060577-28f0-474e-9c7d-1d45ee08310d)
+
+Output Y connectivity to PMOS and NMOS drain verified
+
+![image](https://github.com/user-attachments/assets/3c3f9045-7df6-433f-830f-17bf5f281c29)
+
+#### 3. Spice extraction of inverter in magic.
+
+Commands for spice extraction of the custom inverter layout to be used in tkcon window of magic
+
+```tcl
+# Check current directory
+pwd
+
+# Extraction command to extract to .ext format
+extract all
+
+# Before converting ext to spice this command enable the parasitic extraction also
+ext2spice cthresh 0 rthresh 0
+
+# Converting to ext to spice
+ext2spice
+```
+![image](https://github.com/user-attachments/assets/664e5b09-9de2-45cd-9c47-59719359fb68)
+
+#### 4. spice tecgnology file, simulation and output graph
+
+
+![image](https://github.com/user-attachments/assets/8cde7b4e-a65d-469b-a0ca-32aa56679a7c)
+
+
+![image](https://github.com/user-attachments/assets/e83aca2a-edd4-4611-a076-da3400d4a5dd)
+
+
+updated tech file:
+
+![image](https://github.com/user-attachments/assets/88803377-45ca-47af-a96b-dd7d91d106c0)
+
+#### 5. Parameters Calculation
+  ##### 5.a) rise transition of of output: 20% of VDD to 80% of VDD
+```math
+rise\_transition = (80 % of 3.3v) - (20 % of 3.3v)
+                = (x-coordinate\ pos. of\ 2.64v - x-coordinate\ pos. of\ 0.66v)
+                = (6.24247*e-19) - (6.61804*e-19)
+                = 0.06163\ ns
+```
+
+  ##### 5.b) fall transition of of output: 80% of VDD to 20% of VDD
+```math
+fall\_transition = (20 % of 3.3v) - (80% of 3.3v)
+                = (x-coordinate\ pos. of\ 0.66v - x-coordinate\ pos. of\ 2.64v)
+                = (8.09409*e-19) - (8.05156*e-19)
+                = 0.04253\ ns
+```
+                
+  ![Screenshot from 2024-08-30 18-18-42](https://github.com/user-attachments/assets/7fc13cca-f173-40e0-8c3b-ac0d6a6858c8)
+
+                
+  ##### 5.c) cell rise delay: (50% of o/p rise) - (50% of i/p fall)
+```math
+ cell\_rise\_delay= (x-coordinate\ pos. of\ 1.65v - x-coordinate\ pos. of\ 1.65v)
+                = (6.2089*e-19) - (6.15*e-19)
+                = 0.0589\ ns
+```
+                
+  ![Screenshot from 2024-08-30 18-24-04](https://github.com/user-attachments/assets/8f885539-8b54-4e08-b39b-6eb989749332)
+
+  ##### 5.d) cell fall delay: (50% of o/p fall) - (50% of i/p rise)
+```math
+ cell\_fall\_delay= (x-coordinate\ pos. of\ 1.65v - x-coordinate\ pos. of\ 1.65v)
+                = (8.07657*e-19) - (8.05*e-19)
+                = 0.02657\ ns
+```
+                
+  ![Screenshot from 2024-08-30 18-26-33](https://github.com/user-attachments/assets/9636b765-cf0f-4b80-9bd0-c28927982734)
+
+#### 6. Introduction to Magic tool and DRC
+
+![Screenshot from 2024-08-30 23-22-53](https://github.com/user-attachments/assets/23ff1ac9-6b2f-440e-843b-77a82dc0635f)
+
+![Screenshot from 2024-08-30 23-37-07](https://github.com/user-attachments/assets/0c2c91cc-a865-477c-abdc-9c469bd7f1c7)
+
+![Screenshot from 2024-08-30 23-38-48](https://github.com/user-attachments/assets/6c03bc22-8909-492f-ad8d-6a04e9bc2516)
+
+![Screenshot from 2024-08-31 00-13-06](https://github.com/user-attachments/assets/e9368ab6-47cb-4a22-b284-549108f167b9)
+
+![Screenshot from 2024-08-31 00-22-14](https://github.com/user-attachments/assets/d3aa46d6-bbde-4273-b744-910a597e6f75)
+
+![Screenshot from 2024-08-31 00-27-51](https://github.com/user-attachments/assets/3eb2dc89-30be-4c20-a408-adec09a08a4b)
+
+![Screenshot from 2024-08-31 00-41-17](https://github.com/user-attachments/assets/6aa6b086-f3a1-4599-8aa3-f7cc21689653)
 
