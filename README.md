@@ -1215,3 +1215,381 @@ run_cts
 ![image](https://github.com/user-attachments/assets/19786d1f-3191-4691-a06f-d72d314bc3ca)
 
 # Section - 5 Final Steps for RTL2GDS Using TritonROUTE and openSTA
+
+### 1-Routing and DRC
+Routing and Design Rule Check (DRC) are key steps in the physical design process of integrated circuits (ICs). They play crucial roles in ensuring that the design is manufacturable and meets all the required electrical and physical constraints.
+
+#### a. Routing:
+Routing is the process of connecting the various components (standard cells, macros, IOs, etc.) in an IC design with metal interconnects according to the netlist generated during the synthesis stage.
+
+#### Key Aspects of Routing:
+**Global Routing:**
+
+- Purpose: Provides an abstract, coarse-grained plan of how the connections will be made across different regions of the chip. It divides the chip area into a grid and assigns paths to nets without detailed geometry.
+- Outcome: Guides the detailed routing stage by giving an overall connectivity layout.
+
+  
+**Detailed Routing:**
+
+- Purpose: Converts the global routing plan into actual geometrical paths on the metal layers of the chip.
+- Metal Layers: The routing is done using different metal layers, with lower layers typically used for local connections and higher layers for long-distance or global connections.
+
+#### Routing Algorithms:
+
+Maze Routing: Finds the shortest path between two points, avoiding obstacles.
+Channel Routing: Manages routing in channels between rows of cells.
+Grid-Based Routing: Uses a grid to guide the routing paths and ensure that they follow design rules.
+
+**Routing Challenges:**
+
+Congestion: Too many wires trying to pass through the same area can lead to congestion, which can cause timing issues or even make routing impossible.
+Crosstalk: Signals on adjacent wires can interfere with each other, leading to noise and potential errors.
+Delay: Longer or more resistive paths can introduce delays that affect the timing of the circuit.
+
+**Routing Constraints:**
+
+Timing Constraints: Ensuring that the routed paths meet the required timing (setup and hold times).
+
+**Power Constraints:** Minimizing power consumption and ensuring that power distribution is balanced.
+
+**Signal Integrity:** Maintaining signal quality by minimizing noise, crosstalk, and other electrical issues.
+
+#### b. Design Rule Check (DRC):
+Design Rule Check (DRC) is a verification step in the physical design process that ensures the layout of the chip adheres to a set of predefined rules provided by the semiconductor foundry. These rules are necessary to guarantee that the design can be manufactured reliably.
+
+#### Key Aspects of DRC:
+
+ **Design Rules:**
+
+ - Spacing Rules: Minimum distances between different metal layers, vias, or other features to avoid shorts and ensure manufacturability.
+ - Width Rules: Minimum and maximum width of wires to ensure that they can be manufactured correctly and carry the required current without issues.
+ - Enclosure Rules: Requirements for how different layers must overlap or enclose each other (e.g., metal layers and vias).
+ - Alignment Rules: Ensure that different layers align correctly to avoid misalignment during manufacturing.
+
+**DRC Tools:**
+
+Tools like Calibre, Mentor Graphics, or Cadence's Assura are commonly used to run DRC checks. These tools take the physical layout as input and verify it against the foundry's design rules.
+
+**Common DRC Violations:**
+
+- Shorts: When two wires or components that should not be connected are too close or overlap.
+  
+- Opens: Missing connections due to routing errors or insufficient overlap of layers.
+  
+- Minimum Width Violations: Wires or features that are too narrow and might not be reliably manufactured.
+  
+- Spacing Violations: Features that are too close together, which can cause shorts or manufacturing issues.
+ 
+
+**DRC Correction:**
+
+After running a DRC, any violations are flagged, and the design must be corrected. This may involve adjusting the layout, rerouting wires, or modifying cell placement.
+
+![image](https://github.com/user-attachments/assets/94885594-3726-4a89-b7e7-b27f4a263800)
+![image](https://github.com/user-attachments/assets/f09e856d-7d60-456e-a62c-ffac6bcccaab)
+
+
+
+### 2-Global routing and Detailed routing
+
+#### a. Global Routing:
+
+**Purpose:**  Provides a high-level, coarse plan for connecting different regions of the chip. It divides the chip into grids and assigns general paths for connections without specifying exact wire routes.
+
+**Outcome:** Guides the detailed routing stage by outlining broad paths for signals to follow, helping to manage congestion and ensure that connections can be made.
+
+#### b. Detailed Routing:
+
+**Purpose:** Converts the global routing plan into precise, geometric wire routes on specific metal layers, connecting all components according to the design's netlist.
+
+**Outcome:**  Finalizes the exact paths for each wire, ensuring they meet design rules (like spacing and width), and resolves any conflicts or congestion identified during global routing.
+
+![image](https://github.com/user-attachments/assets/f3802b22-cd0c-425a-9825-c9c77ce44e3a)
+
+
+### 3-Maze routing and Steiner tree algorithm
+
+#### a. Maze Routing:
+
+- Purpose: Maze routing is an algorithm used to find a path between two points (e.g., from a source to a destination pin) in a grid while avoiding obstacles.
+
+**How It Works:**
+
+The grid is treated as a matrix, where each cell represents a possible location for the wire. Obstacles like other wires, cells, or blocked areas are marked as unavailable.
+The algorithm explores all possible paths from the source to the destination, usually using a breadth-first search (BFS) approach.
+It expands from the source node by checking neighboring cells until it reaches the destination.
+The shortest path found through this exploration is chosen as the route.
+- Pros:
+
+Optimal Path: Guarantees finding the shortest path if one exists.
+Flexibility: Can handle complex obstacles and multiple routing layers.
+- Cons:
+
+Computationally Expensive: Can be slow and resource-intensive, especially for large designs.
+Not Always Practical for Large Grids: The algorithm can become infeasible for very large or densely populated grids due to its exhaustive nature.
+
+#### b. Steiner Tree Algorithm:
+
+**Purpose:** The Steiner tree algorithm is used to connect multiple points (e.g., multiple pins that need to be connected by a single net) with the shortest possible interconnect length, minimizing the total wire length.
+
+**How It Works:**
+
+The algorithm starts by creating a minimal spanning tree (MST) that connects all the target points (e.g., pins).
+Steiner points, which are additional points not originally in the set of target points, are introduced to reduce the overall wire length. These points act as intermediate nodes that help in minimizing the total connection length.
+The resulting structure is a Steiner tree, which is a tree that connects all target points (and possibly additional Steiner points) with the minimal total interconnect length.
+
+- Pros:
+
+Minimized Wire Length: Produces a routing solution with minimal total wire length, which is beneficial for reducing delay and power consumption.
+Efficient for Multi-Terminal Nets: Particularly useful for nets that need to connect more than two pins.
+
+- Cons:
+  
+Complexity: Finding the exact Steiner tree is an NP-hard problem, meaning it can be computationally expensive for large nets.
+Approximation: Often, heuristic or approximate methods are used to find a near-optimal Steiner tree, which might not be the absolute minimum.
+
+![image](https://github.com/user-attachments/assets/9cfc90dd-0b71-41d4-96c9-b984e2ecbf65)
+![image](https://github.com/user-attachments/assets/e284dded-e949-428b-9b2b-869dfb9edca2)
+![image](https://github.com/user-attachments/assets/9fb66838-70f4-4564-8e6c-75f2b4f49143)
+
+
+
+### 4-Power distribution and network routing
+
+**Power Distribution:**
+Power distribution in IC design refers to the process of delivering power from the external power sources (like power pads or pins) to every component within the chip, including logic gates, flip-flops, memory cells, and other circuits.
+
+##### Key Concepts:
+
+**Power and Ground Rails:**
+These are the main conductors that distribute power (VDD) and ground (VSS) across the chip. They are typically implemented as wide metal lines running across the chip to minimize resistance and voltage drop.
+
+##### Power Grids:
+A power grid is a network of horizontal and vertical metal lines that form a mesh-like structure across the chip. This grid ensures that power is distributed uniformly to all areas of the chip.
+- VDD Grid: Carries the supply voltage.
+  
+- VSS Grid: Carries the ground potential.
+
+##### Power Rings:
+Rings of metal lines surrounding certain regions or blocks on the chip, providing a stable supply of power and grounding. They help in minimizing noise and ensuring a reliable power supply.
+
+##### Power Straps:
+Wider metal lines or groups of parallel lines that provide robust connections between the power grid and the power sources. These straps help reduce resistance and voltage drop.
+
+##### Decoupling Capacitors:
+Capacitors placed close to the power pins of circuits to stabilize the power supply by filtering out noise and compensating for sudden changes in current demand.
+
+#### b. Power Network Routing:
+Power network routing involves the detailed placement and routing of the power distribution network (PDN) on the chip, ensuring that all blocks and standard cells receive adequate power.
+
+##### Steps in Power Network Routing:
+
+**Placement of Power Pads:**
+Power pads (VDD, VSS) are placed around the periphery of the chip or in specific locations within the chip. These pads connect the internal power network to the external power supply.
+
+**Creation of Power Grid:**
+A grid of metal layers is laid out across the chip to distribute the power. The grid usually spans multiple metal layers, with the lower layers used for local distribution and the upper layers for global distribution.
+
+**Power Rings and Straps:**
+
+Power rings are placed around the periphery of major blocks (e.g., memory blocks, large logic blocks) to ensure a stable power supply.
+Power straps are used to connect the power rings and the power grid, ensuring that current can flow efficiently from the power pads to all parts of the chip.
+
+**Via Placement:**
+
+Vias are used to connect different metal layers within the power grid. Multiple vias are often placed in parallel to reduce resistance and ensure reliable current flow.
+
+**IR Drop Analysis:**
+
+After routing the power network, an IR drop analysis is performed to ensure that the voltage drop across the power grid is within acceptable limits. Excessive IR drop can cause circuits to malfunction due to insufficient voltage levels.
+
+**Electromigration Check:**
+
+Electromigration refers to the gradual movement of metal atoms in the power grid due to high current densities, which can lead to failures. The power network is checked to ensure that the current density in all metal lines is below the safe limits to avoid electromigration.
+
+**Noise and Decoupling:**
+
+The power network is designed to minimize noise (e.g., ground bounce) by carefully placing decoupling capacitors and ensuring that the grid structure is robust.
+
+![image](https://github.com/user-attachments/assets/556b6b77-e24b-447b-a94c-d089ce2301d5)
+
+
+
+
+### 5-TritonRoute features
+
+TritonRoute is an open-source detailed routing tool used in the physical design of integrated circuits (ICs). It is a critical component of the Triton suite of EDA (Electronic Design Automation) tools. TritonRoute is specifically designed for the detailed routing stage of VLSI (Very Large Scale Integration) design.
+
+#### Key Features of TritonRoute:
+
+**Detailed Routing:**
+
+TritonRoute performs the detailed routing step in the IC design flow, where it converts global routing paths into exact geometrical wire routes on the metal layers of the chip.
+It handles the connection of signal nets, power nets, and clock nets, ensuring that all routing adheres to design rules.
+
+**Design Rule Checking (DRC):**
+
+TritonRoute incorporates design rule checking within its routing algorithms to ensure that all routed wires comply with the foundry's design rules, such as spacing, width, and via requirements.
+The tool is capable of resolving DRC violations that may arise during routing.
+
+**Open-Source and Integration:**
+
+TritonRoute is open-source, which means it can be freely used, modified, and integrated into custom EDA flows.
+It is part of the broader OpenROAD project, which aims to provide a fully autonomous, open-source RTL-to-GDSII flow.
+
+**High-Quality Routing:**
+
+The tool focuses on generating high-quality routing solutions that minimize wire length, reduce congestion, and respect timing and power constraints.
+It can handle complex designs with a large number of nets and multiple metal layers.
+Scalability:
+
+TritonRoute is designed to be scalable, handling both small and large designs efficiently. It leverages modern algorithms to manage the complexity of routing in advanced technology nodes.
+
+**Customization and Flexibility:**
+
+Being open-source, TritonRoute allows for extensive customization. Users can modify the tool to suit specific design requirements or integrate it with other tools in their design flow.
+The tool can be adapted for different technology nodes and design styles.
+
+**Part of the Triton Suite:**
+
+TritonRoute works in conjunction with other tools in the Triton suite, such as TritonCTS (Clock Tree Synthesis) and TritonPlace (Placement), providing a comprehensive solution for physical design.
+
+**Community and Support:**
+
+As an open-source project, TritonRoute benefits from community contributions and ongoing development. It is actively maintained by researchers and contributors in the EDA community.
+
+![image](https://github.com/user-attachments/assets/61bd696f-d250-483f-b8de-995fcb3455ed)
+![image](https://github.com/user-attachments/assets/a549f2f0-0a34-4c02-aa35-947e558a2221)
+![image](https://github.com/user-attachments/assets/e6966a25-abb9-4ffd-87b9-9030cd240e9f)
+
+#### 1. Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+
+Commands to perform all necessary stages up until now
+
+```bash
+# Change directory to openlane flow directory
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# alias docker='docker run -it -v $(pwd):/openLANE_flow -v $PDK_ROOT:$PDK_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) efabless/openlane:v0.21'
+# Since we have aliased the long command to 'docker' we can invoke the OpenLANE flow docker sub-system by just running this command
+docker
+```
+```tcl
+# Now that we have entered the OpenLANE flow contained docker sub-system we can invoke the OpenLANE flow in the Interactive mode using the following command
+./flow.tcl -interactive
+
+# Now that OpenLANE flow is open we have to input the required packages for proper functionality of the OpenLANE flow
+package require openlane 0.9
+
+# Now the OpenLANE flow is ready to run any design and initially we have to prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
+prep -design picorv32a
+
+# Addiitional commands to include newly added lef to openlane flow merged.lef
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Command to set new value for SYNTH_STRATEGY
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Command to set new value for SYNTH_SIZING
+set ::env(SYNTH_SIZING) 1
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+
+# Following commands are alltogather sourced in "run_floorplan" command
+init_floorplan
+place_io
+tap_decap_or
+
+# Now we are ready to run placement
+run_placement
+
+# Incase getting error
+unset ::env(LIB_CTS)
+
+# With placement done we are now ready to run CTS
+run_cts
+
+# Now that CTS is done we can do power distribution network
+gen_pdn 
+```
+
+Screenshots of power distribution network run
+
+![image](https://github.com/user-attachments/assets/06de6ac4-26fe-4f94-841e-d4f09f98c67f)
+![image](https://github.com/user-attachments/assets/17f1da4a-4b23-4b48-bd22-4a6ed04f5d35)
+
+Commands to load PDN def in magic in another terminal
+
+```bash
+# Change directory to path containing generated PDN def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/15-10_07-29/tmp/floorplan/
+
+# Command to load the PDN def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read 14-pdn.def &
+```
+
+Screenshots of PDN def
+
+![image](https://github.com/user-attachments/assets/218f0671-17f0-40f3-b7c6-503932e53279)
+![image](https://github.com/user-attachments/assets/eaa88af4-31ff-436a-92b3-55a6827620b8)
+
+#### 2. Perfrom detailed routing using TritonRoute and explore the routed layout.
+
+Command to perform routing
+
+```tcl
+# Check value of 'CURRENT_DEF'
+echo $::env(CURRENT_DEF)
+
+# Check value of 'ROUTING_STRATEGY'
+echo $::env(ROUTING_STRATEGY)
+
+# Command for detailed route using TritonRoute
+run_routing
+```
+
+Screenshots of routing run
+
+![image](https://github.com/user-attachments/assets/07c4404f-50da-4476-a556-bd0e78c8369d)
+![image](https://github.com/user-attachments/assets/76acdcb7-e86e-4438-908d-12852f1c97f3)
+![image](https://github.com/user-attachments/assets/34911b6b-2ab1-4227-b88a-5397490048fe)
+
+Commands to load routed def in magic in another terminal
+
+```bash
+# Change directory to path containing routed def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/15-10_07-29/results/routing/
+
+# Command to load the routed def in magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
+```
+
+Screenshots of routed def
+
+![image](https://github.com/user-attachments/assets/21925838-cfdd-4579-a5b3-aa75a9332929)
+![image](https://github.com/user-attachments/assets/0a3f5882-b4e7-4a00-9c16-b53408f2ebab)
+![image](https://github.com/user-attachments/assets/f3eb197c-1b39-4884-a617-dfc018a9e8dc)
+![image](https://github.com/user-attachments/assets/6150cbbd-fd55-4e7e-b74e-f7492f4b6aac)
+
+Screenshot of fast route guide present in `openlane/designs/picorv32a/runs/15-10_07-29/tmp/routing` directory
+
+![image](https://github.com/user-attachments/assets/07dfd38d-ba11-46ed-80d4-d81d83517cdb)
+
+#### 3. Post-Route parasitic extraction using SPEF extractor.
+
+Commands for SPEF extraction using external tool
+
+```bash
+# Change directory
+cd Desktop/work/tools/SPEF_EXTRACTOR
+
+# Command extract spef
+python3 main.py /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-03_08-45/tmp/merged.lef /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/15-10_07-29/results/routing/picorv32a.def
+```
+![image](https://github.com/user-attachments/assets/eb20601f-471f-43f5-97a6-1ef7309dafed)
+
+
+
+
