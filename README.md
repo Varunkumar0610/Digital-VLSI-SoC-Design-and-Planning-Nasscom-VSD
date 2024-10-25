@@ -299,7 +299,7 @@ run_floorplan
 **Picorv32a floorplan def file:**
 
 
-![image](https://github.com/user-attachments/assets/83944c67-4504-48ba-b56a-1410d20ec6a3)
+![Screenshot from 2024-10-25 11-30-35](https://github.com/user-attachments/assets/b1197928-80ae-4aa8-adb8-843938943560)
 
 ![image](https://github.com/user-attachments/assets/8830c6b8-f95f-4662-81de-d73e5f4a277c)
 
